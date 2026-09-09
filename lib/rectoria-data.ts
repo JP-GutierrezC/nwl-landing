@@ -133,7 +133,7 @@ export const areas: RectoriaArea[] = [
   },
   {
     id: 'desarrollo-organizacional',
-    name: { en: 'Organisational Development', es: 'Desarrollo Organizacional' },
+    name: { en: 'People & Culture', es: 'Desarrollo Organizacional' },
     summary: {
       en: 'People, culture and the way NWL hires, trains and keeps its teachers and staff.',
       es: 'Personas, cultura y la forma en que NWL recluta, forma y retiene a sus docentes y colaboradores.',
@@ -142,11 +142,11 @@ export const areas: RectoriaArea[] = [
       {
         id: 'tannia-liminana',
         name: 'Tannia Limiñana Rubio',
-        title: { en: 'Organisational Development', es: 'Desarrollo Organizacional' },
+        title: { en: 'People & Culture', es: 'Desarrollo Organizacional' },
         image: img('tannia-liminana'),
         facts: [{ en: 'Previously at Safran Querétaro', es: 'Antes en Safran Querétaro' }],
         bio: {
-          en: 'Tannia is responsible for Organisational Development: recruitment, onboarding, training and performance management for teachers and staff at all campuses. Before NWL she worked at Safran in Querétaro.',
+          en: 'Tannia is responsible for People & Culture: recruitment, onboarding, training and performance management for teachers and staff at all campuses. Before NWL she worked at Safran in Querétaro.',
           es: 'Tannia es responsable de Desarrollo Organizacional: reclutamiento, integración, capacitación y evaluación del desempeño de docentes y colaboradores en todos los campus. Antes de NWL trabajó en Safran, en Querétaro.',
         },
       },
