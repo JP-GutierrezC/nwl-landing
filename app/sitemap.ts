@@ -2,6 +2,7 @@ import type { MetadataRoute } from 'next';
 import { campuses } from '@/lib/campus-data';
 import { getAllInformacionSlugs } from '@/lib/informacion-data';
 import { SITE_URL } from '@/lib/seo';
+import { RECTORIA_PUBLIC } from '@/lib/rectoria-preview';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date().toISOString();
@@ -32,6 +33,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
     },
   ];
+
+  // Rectoría joins the sitemap only once the launch flag is on
+  if (RECTORIA_PUBLIC) {
+    staticPages.push({ url: `${SITE_URL}/rectoria`, lastModified: now });
+  }
 
   // Dynamic campus pages
   const campusPages: MetadataRoute.Sitemap = Object.keys(campuses).map(

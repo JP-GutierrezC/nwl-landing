@@ -11,7 +11,7 @@ export const SITE_LEGAL_NAME = 'Colegio NWL';
  * is meaningfully revised — do not derive from filesystem mtimes (Vercel
  * resets them on every build, which would falsely reset the signal).
  */
-export const SITE_LAST_UPDATED = '2026-07-15';
+export const SITE_LAST_UPDATED = '2026-09-08';
 
 /** Default OG image used as fallback when a page-specific image isn't set */
 export const DEFAULT_OG_IMAGE = `${SITE_URL}/images/og/nwl/home.jpg`;
@@ -77,6 +77,12 @@ export const PAGE_SEO = {
     title: 'Parents Portal — Portal de Padres',
     description:
       'Access school calendars, cafeteria menus, announcements, and supply lists for NWL Australian School. Portal de padres de NWL Australian School.',
+    ogImage: '/images/og/nwl/home.jpg',
+  },
+  rectoria: {
+    title: 'Rectoría — Leadership Team',
+    description:
+      'Meet Rectoría, the leadership team behind NWL Australian School: the Executive Director, the five areas that run all campuses as one school, and the directors of Juriquilla, Milenio, Corregidora, Zibatá and San Miguel de Allende.',
     ogImage: '/images/og/nwl/home.jpg',
   },
   noticias: {

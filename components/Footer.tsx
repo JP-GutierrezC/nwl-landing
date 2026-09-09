@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation';
 import { FiMail, FiPhone, FiMapPin, FiFacebook, FiInstagram } from 'react-icons/fi';
 import { FaWhatsapp } from 'react-icons/fa';
 import { useLanguage } from '@/lib/i18n/LanguageContext';
+import { RECTORIA_PUBLIC } from '@/lib/rectoria-preview';
 import Logo from './ui/Logo';
 
 const campuses = [
@@ -69,7 +70,9 @@ export default function Footer() {
           <div>
             <h3 className="font-mono text-[11px] uppercase tracking-[0.22em] text-gold mb-4">{t.footer.schoolHeading}</h3>
             <ul className="space-y-2">
-              {t.footer.schoolLinks.map((link) => (
+              {t.footer.schoolLinks
+                .filter((link) => RECTORIA_PUBLIC || link.href !== '/rectoria')
+                .map((link) => (
                 <li key={link.href}>
                   <a
                     href={resolveHref(link.href)}

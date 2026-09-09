@@ -1,6 +1,7 @@
 import { SITE_URL, SITE_NAME, SITE_LAST_UPDATED, SITE_LEGAL_NAME } from '@/lib/seo';
 import type { CampusData } from '@/lib/campus-data';
 import type { InformacionPage, InformacionFAQ } from '@/lib/informacion-data';
+import { executive, visibleAreas, campusDirectors } from '@/lib/rectoria-data';
 
 /* ── Helper to render a JSON-LD script tag ── */
 function JsonLdScript({ data }: { data: Record<string, unknown> }) {
@@ -266,6 +267,57 @@ export function ArticleJsonLd({
         '@type': 'ImageObject',
         url: `${SITE_URL}/images/brand/nwl-as-logo-color.png`,
       },
+    },
+  };
+
+  return <JsonLdScript data={data} />;
+}
+
+/* ── AboutPage + Person list — used on /rectoria ── */
+export function RectoriaJsonLd() {
+  const url = `${SITE_URL}/rectoria`;
+  const orgRef = { '@id': `${SITE_URL}/#organization` };
+
+  // Executive + area leads only (the people the page features); support staff
+  // are shown on the page but kept out of the schema, and hidden people are
+  // dropped everywhere so the markup never claims someone the page doesn't display.
+  const rectoria = [executive, ...visibleAreas().flatMap((a) => a.leads)]
+    .filter((p) => !p.hidden)
+    .map((p) => ({
+      '@type': 'Person',
+      name: p.name,
+      jobTitle: p.title.en,
+      ...(p.image ? { image: `${SITE_URL}${p.image}` } : {}),
+      worksFor: orgRef,
+    }));
+
+  const directors = campusDirectors().map(({ slug, director }) => ({
+    '@type': 'Person',
+    name: director.name,
+    jobTitle: director.title.en,
+    image: `${SITE_URL}${director.image}`,
+    worksFor: { '@id': `${SITE_URL}/#campus-${slug}` },
+  }));
+
+  const data = {
+    '@context': 'https://schema.org',
+    '@type': 'AboutPage',
+    '@id': `${url}/#webpage`,
+    url,
+    name: 'Rectoría — Leadership Team | NWL Australian School',
+    description:
+      'The leadership team behind NWL Australian School: the Executive Director, the Rectoría areas that run all five campuses as one school, and the campus directors.',
+    inLanguage: ['en', 'es-MX'],
+    isPartOf: { '@id': `${SITE_URL}/#website` },
+    about: orgRef,
+    dateModified: SITE_LAST_UPDATED,
+    mainEntity: {
+      '@type': 'ItemList',
+      itemListElement: [...rectoria, ...directors].map((person, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        item: person,
+      })),
     },
   };
 

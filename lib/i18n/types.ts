@@ -463,6 +463,34 @@ export interface Dictionary {
     partnerFormTitle: string;
     partnerBenefits: { title: string; description: string }[];
   };
+  rectoria: {
+    heroEyebrow: string;
+    heroTitle: string;
+    heroTitleAccent: string;
+    heroSubtitle: string;
+    backHome: string;
+    // Executive office
+    execEyebrow: string;
+    execAsideLabel: string;
+    // Áreas de Rectoría
+    areasEyebrow: string;
+    areasTitle: string;
+    areasTitleAccent: string;
+    areasSubtitle: string;
+    teamLabel: string;
+    // Campus directors row
+    directorsEyebrow: string;
+    directorsTitle: string;
+    directorsTitleAccent: string;
+    directorsSubtitle: string;
+    directorsLink: string;
+    // Closing CTA
+    ctaTitle: string;
+    ctaTitleAccent: string;
+    ctaSubtitle: string;
+    ctaPrimary: string;
+    ctaSecondary: string;
+  };
   admin: {
     loginTitle: string;
     loginSubtitle: string;

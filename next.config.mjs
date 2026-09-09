@@ -98,7 +98,6 @@ const nextConfig = {
       { source: '/zibata/:path*', destination: '/campus/zibata', permanent: true },
 
       // ── Old general pages → home (no direct equivalent in new site) ──
-      { source: '/rectoria', destination: '/', permanent: true },
       { source: '/modelo-educativo', destination: '/', permanent: true },
       { source: '/experiencias-internacionales', destination: '/', permanent: true },
       { source: '/grupos-representativos', destination: '/', permanent: true },

@@ -1,6 +1,12 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { COOKIE_NAME, ROLE_HOME, verifyToken } from '@/lib/auth-edge';
+import {
+  RECTORIA_PUBLIC,
+  RECTORIA_PREVIEW_COOKIE,
+  RECTORIA_PREVIEW_PARAM,
+  rectoriaPreviewToken,
+} from '@/lib/rectoria-preview';
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -17,6 +23,37 @@ export async function middleware(request: NextRequest) {
     url.searchParams.set('utm_medium', 'offline');
     url.searchParams.set('utm_campaign', `brochure_${level.replace(/-/g, '_')}`);
     return NextResponse.redirect(url);
+  }
+
+  // ── Rectoría private preview ──
+  // Until the page is launched (NEXT_PUBLIC_RECTORIA_PUBLIC=true), only
+  // browsers that came through the preview link can see it. The link sets a
+  // cookie and redirects to the clean URL; anyone else gets the 404 page, so
+  // the route is invisible rather than "coming soon".
+  if (!RECTORIA_PUBLIC && (pathname === '/rectoria' || pathname.startsWith('/rectoria/'))) {
+    const token = rectoriaPreviewToken();
+
+    if (request.nextUrl.searchParams.get(RECTORIA_PREVIEW_PARAM) === token) {
+      const url = request.nextUrl.clone();
+      url.searchParams.delete(RECTORIA_PREVIEW_PARAM);
+      const response = NextResponse.redirect(url);
+      response.cookies.set(RECTORIA_PREVIEW_COOKIE, token, {
+        httpOnly: true,
+        sameSite: 'lax',
+        secure: process.env.NODE_ENV === 'production',
+        path: '/rectoria',
+        maxAge: 60 * 60 * 24 * 30,
+      });
+      return response;
+    }
+
+    if (request.cookies.get(RECTORIA_PREVIEW_COOKIE)?.value !== token) {
+      return NextResponse.rewrite(new URL('/rectoria/not-found', request.url), { status: 404 });
+    }
+
+    const response = NextResponse.next();
+    response.headers.set('X-Robots-Tag', 'noindex, nofollow');
+    return response;
   }
 
   // ── Admin route protection ──
