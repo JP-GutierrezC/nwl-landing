@@ -1171,7 +1171,7 @@ export const en: Dictionary = {
     directorsTitle: 'Five campuses,',
     directorsTitleAccent: 'five directors',
     directorsSubtitle:
-      'Each campus has its own general director. Their message to families lives on the campus page.',
+      'Each campus has its own general director.',
     directorsLink: 'Read their message',
     ctaTitle: 'Want to build this',
     ctaTitleAccent: 'with us?',
